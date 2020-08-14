@@ -42,12 +42,12 @@ export default {
         },
         materialCount(){
             this.$http({
-                url: this.$http.adornUrl('/manage/wxAssets/materialCount')
+                url: this.$http.adornUrl('/wxAssets/materialCount')
             }).then(({ data }) => {
-                if (data && data.code == 200) {
+                if (data.success) {
                     this.assetsCount=data.data
                 } else {
-                    this.$message.error(data.msg);
+                    this.$message.error(data.message);
                 }
             })
         }

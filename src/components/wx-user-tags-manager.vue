@@ -43,13 +43,13 @@ export default {
         },
         getWxUserTags() {
             this.$http({
-                url: this.$http.adornUrl('/manage/wxUserTags/list'),
+                url: this.$http.adornUrl('/wxUserTags/list'),
                 method: 'get',
             }).then(({ data }) => {
-                if (data && data.code === 200) {
-                    this.$store.commit('wxUserTags/updateTags', data.list)
+                if (data.success) {
+                    this.$store.commit('wxUserTags/updateTags', data.data)
                 } else {
-                    this.$message.error(data.msg)
+                    this.$message.error(data.message)
                 }
             })
         },
@@ -64,14 +64,14 @@ export default {
             }).then(() => {
                 this.submitting=true
                 this.$http({
-                    url: this.$http.adornUrl('/manage/wxUserTags/delete/'+tagid),
+                    url: this.$http.adornUrl('/wxUserTags/delete/'+tagid),
                     method: 'post',
                 }).then(({ data }) => {
-                    if (data && data.code === 200) {
+                    if (data.success) {
                         this.getWxUserTags();
                         this.$emit('change');
                     } else {
-                        this.$message.error(data.msg)
+                        this.$message.error(data.message)
                     }
                     this.submitting=false;
                 })
@@ -107,18 +107,18 @@ export default {
             }
             this.submitting=true
             this.$http({
-                url: this.$http.adornUrl('/manage/wxUserTags/save'),
+                url: this.$http.adornUrl('/wxUserTags/save'),
                 method: 'post',
                 data:this.$http.adornData({
                     id : tagid?tagid:undefined,
                     name : name
                 })
             }).then(({ data }) => {
-                if (data && data.code === 200) {
+                if (data.success) {
                     this.getWxUserTags();
                     this.$emit('change');
                 } else {
-                    this.$message.error(data.msg)
+                    this.$message.error(data.message)
                 }
                 this.submitting=false;
             })

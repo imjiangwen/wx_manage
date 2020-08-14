@@ -70,18 +70,18 @@ export default {
             if(this.dataListLoading) return
             this.dataListLoading = true
             this.$http({
-                url: this.$http.adornUrl('/manage/wxAssets/materialFileBatchGet'),
+                url: this.$http.adornUrl('/wxAssets/materialFileBatchGet'),
                 params: this.$http.adornParams({
                     'page': this.pageIndex,
                     'type': this.fileType
                 })
             }).then(({ data }) => {
-                if (data && data.code == 200) {
+                if (data.success) {
                     this.dataList = data.data.items
                     this.totalCount = data.data.totalCount
-                     this.pageIndex++;
+                    this.pageIndex++;
                 } else {
-                    this.$message.error(data.msg);
+                    this.$message.error(data.message);
                 }
                 this.dataListLoading = false
             })
@@ -105,11 +105,11 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.$http({
-                    url: this.$http.adornUrl('/manage/wxAssets/materialDelete'),
+                    url: this.$http.adornUrl('/wxAssets/materialDelete'),
                     method: 'post',
                     data: { mediaId: id }
                 }).then(({ data }) => {
-                    if (data && data.code === 200) {
+                    if (data.success) {
                         this.$message({
                             message: '操作成功',
                             type: 'success',
@@ -120,7 +120,7 @@ export default {
                             }
                         })
                     } else {
-                        this.$message.error(data.msg)
+                        this.$message.error(data.message)
                     }
                 })
             })

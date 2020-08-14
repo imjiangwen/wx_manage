@@ -5,7 +5,6 @@ import user from './modules/user'
 import article from './modules/article'
 import message from './modules/message'
 import wxUserTags from './modules/wxUserTags'
-import wxAccount from './modules/wxAccount'
 
 Vue.use(Vuex)
 
@@ -15,8 +14,7 @@ export default new Vuex.Store({
     user,
     article,
     message,
-    wxUserTags,
-    wxAccount
+    wxUserTags
   },
   mutations: {
   },

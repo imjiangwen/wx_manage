@@ -3,8 +3,8 @@ import axios from 'axios'
 import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
-import { clearLoginInfo } from '@/utils'
-const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
+// const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
+const baseUrl= '//' + document.location.host + "/admin/wx/manage";
 
 const http = axios.create({
   timeout: 1000 * 30,
@@ -18,8 +18,7 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  // config.headers['token'] = Vue.cookie.get('token') // 请求头带上token
-  config.headers['token'] = '4566f5c04102f1fc1d558fe7d90982fe';
+  config.headers['orgId'] = sessionStorage.getItem("orgId");
   return config
 }, error => {
   return Promise.reject(error)

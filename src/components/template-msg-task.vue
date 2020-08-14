@@ -103,24 +103,30 @@ export default {
                 this.$message.error('消息模板无效')
                 return
             }
-            if(!msgTemplate.data || !(msgTemplate.data instanceof Array)){
+
+            var tmp = JSON.parse(JSON.stringify(msgTemplate));
+            if(tmp.data){
+                tmp.data = JSON.parse(tmp.data);
+            }
+
+            if(!tmp.data || !(tmp.data instanceof Array)){
                 this.$message.error('请现配置此模板填充数据')
                 return
             }
-            this.msgTemplate=msgTemplate
+            this.msgTemplate=tmp
             this.visible=true;
         },
         getWxUserTags() {
             return new Promise((resolve,reject)=>{
                 this.$http({
-                    url: this.$http.adornUrl('/manage/wxUserTags/list'),
+                    url: this.$http.adornUrl('/wxUserTags/list'),
                     method: 'get',
                 }).then(({ data }) => {
-                    if (data && data.code === 200) {
-                        this.$store.commit('wxUserTags/updateTags', data.list)
-                        resolve(data.list)
+                    if (data.success) {
+                        this.$store.commit('wxUserTags/updateTags', data.data)
+                        resolve(data.data.list)
                     } else {
-                        this.$message.error(data.msg)
+                        this.$message.error(data.message)
                         reject(data.msg)
                     }
                 }).catch(err=>reject(err))
@@ -146,22 +152,22 @@ export default {
             if(this.sending)return
             this.sending=true
             this.$http({
-                url: this.$http.adornUrl('/manage/msgTemplate/sendMsgBatch'),
+                url: this.$http.adornUrl('/msgTemplate/sendMsgBatch'),
                 method: 'post',
                 data:this.$http.adornData({
                     wxUserFilterParams : this.dataForm,
                     templateId : this.msgTemplate.templateId,
                     url : this.msgTemplate.url,
-                    miniprogram : this.msgTemplate.miniprogram,
+                    miniprogram : JSON.parse(this.msgTemplate.miniprogram),
                     data : this.msgTemplate.data,
                 })
             }).then(({ data }) => {
                 this.sending = false
-                if (data && data.code === 200) {
+                if (data.success) {
                     this.$message.success("消息将在后台发送")
                     this.visible=false
                 } else {
-                    this.$message.error(data.msg)
+                    this.$message.error(data.message)
                 }
             })
         }

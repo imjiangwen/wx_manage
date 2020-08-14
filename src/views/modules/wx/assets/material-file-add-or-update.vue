@@ -67,12 +67,12 @@ export default {
                     form.append('fileName', this.dataForm.fileName)
                     form.append('mediaType', this.dataForm.mediaType)
                     this.$http({
-                        url: this.$http.adornUrl(`/manage/wxAssets/materialFileUpload`),
+                        url: this.$http.adornUrl(`/wxAssets/materialFileUpload`),
                         method: 'post',
                         data: form,
                         headers: { 'Content-Type': 'multipart/form-data' }
                     }).then(({ data }) => {
-                        if (data && data.code === 200) {
+                        if (data.success) {
                             this.$message({
                                 message: '操作成功',
                                 type: 'success',
@@ -83,7 +83,7 @@ export default {
                                 }
                             })
                         } else {
-                            this.$message.error(data.msg)
+                            this.$message.error(data.message)
                         }
                         this.uploading=false
                     })

@@ -62,8 +62,7 @@ router.beforeEach((to, from, next) => {
             { "menuId": 2, "name": "模板消息", "url": "wx/msg-template" },
             { "menuId": 3, "name": "带参二维码", "url": "wx/wx-qrcode" },
             { "menuId": 4, "name": "粉丝管理", "url": "wx/wx-user" },
-            { "menuId": 5, "name": "公众号消息", "url": "wx/wx-msg" },
-            { "menuId": 6, "name": "素材管理", "url": "wx/wx-assets"}
+            { "menuId": 5, "name": "素材管理", "url": "wx/wx-assets"}
             ];
     fnAddDynamicMenuRoutes(menuList)
     router.options.isAddDynamicMenuRoutes = true
@@ -121,7 +120,6 @@ function fnAddDynamicMenuRoutes(menuList = [], routes = []) {
       } else {
         try {
           route['component'] = _import(`modules/${menuList[i].url}`) || null
-          // route['component'] = ()=>import(`@/views/modules/${menuList[i].url}.vue`) || null
         } catch (e) { }
       }
       routes.push(route)
@@ -137,10 +135,6 @@ function fnAddDynamicMenuRoutes(menuList = [], routes = []) {
       { path: '*', redirect: { name: '404' } }
     ])
     sessionStorage.setItem('dynamicMenuRoutes', JSON.stringify(mainRoutes.children || '[]'))
-    console.log('\n')
-    console.log('%c!<-------------------- 动态(菜单)路由 s -------------------->', 'color:blue')
-    console.log(mainRoutes.children)
-    console.log('%c!<-------------------- 动态(菜单)路由 e -------------------->', 'color:blue')
   }
 }
 export default router

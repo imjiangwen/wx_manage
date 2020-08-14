@@ -47,7 +47,7 @@ export default {
             }else if(this.mode=='untagging'){//解绑标签时可选：用户标签的并集
                 let unionSet = new Set();
                 userTags.forEach(tagsIdArray=>{
-                    tagsIdArray.forEach(tagid => unionSet.add(tagid))
+                    JSON.parse(tagsIdArray).forEach(tagid => unionSet.add(tagid))
                 });//将用户的标签放到unionSet中去重
                 return Array.from(unionSet);//unionSet转为数组
             }
@@ -77,7 +77,7 @@ export default {
             this.submitting=true
             let openidList=this.wxUsers.map(u=>u.openid)
             this.$http({
-                url: this.$http.adornUrl(`/manage/wxUserTags/${this.mode=='tagging'?'batchTagging':'batchUnTagging'}`),
+                url: this.$http.adornUrl(`/wxUserTags/${this.mode=='tagging'?'batchTagging':'batchUnTagging'}`),
                 method: 'post',
                 data:this.$http.adornData({
                     tagid : this.selectedTagid,
@@ -85,14 +85,14 @@ export default {
                 })
             }).then(({ data }) => {
                 this.submitting=false
-                if (data && data.code === 200) {
+                if (data.success) {
                     this.$message({
                         message: '操作成功,列表数据需稍后刷新查看',
                         type: 'success',
                         onClose: () =>this.dialogVisible=false
                     })
                 } else {
-                    this.$message.error(data.msg)
+                    this.$message.error(data.message)
                 }
                 
             })

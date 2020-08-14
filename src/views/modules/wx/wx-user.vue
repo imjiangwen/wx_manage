@@ -17,9 +17,9 @@
             </el-form-item>
             <el-form-item>
                 <el-button @click="getDataList()">查询</el-button>
-                <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('tagging')" :disabled="dataListSelections.length <= 0">绑定标签</el-button>
-                <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('untagging')" :disabled="dataListSelections.length <= 0">解绑标签</el-button>
-                <el-button v-if="isAuth('wx:wxuser:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+                <el-button type="primary" @click="$refs.wxUserTagging.init('tagging')" :disabled="dataListSelections.length <= 0">绑定标签</el-button>
+                <el-button type="primary" @click="$refs.wxUserTagging.init('untagging')" :disabled="dataListSelections.length <= 0">解绑标签</el-button>
+                <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
             </el-form-item>
             <el-form-item class="fr">
                 <el-button  icon="el-icon-price-tag" type="success" @click="$refs.wxUserTagsEditor.show()">标签管理</el-button>

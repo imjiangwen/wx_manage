@@ -34,13 +34,11 @@ export default {
             state.sidebarFold = fold
         },
         updateMenuList(state, list) {
-            // state.menuList = list
             var menuList = [{ "menuId": 1, "name": "公众号菜单", "url": "wx/wx-menu" },
             { "menuId": 2, "name": "模板消息", "url": "wx/msg-template" },
             { "menuId": 3, "name": "带参二维码", "url": "wx/wx-qrcode" },
             { "menuId": 4, "name": "粉丝管理", "url": "wx/wx-user" },
-            { "menuId": 5, "name": "公众号消息", "url": "wx/wx-msg" },
-            { "menuId": 6, "name": "素材管理", "url": "wx/wx-assets"}
+            { "menuId": 5, "name": "素材管理", "url": "wx/wx-assets"}
             ];
             state.menuList = menuList;
         },
