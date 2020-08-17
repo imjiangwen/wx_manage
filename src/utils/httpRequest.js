@@ -2,8 +2,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import merge from 'lodash/merge'
-const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
-// const baseUrl= '//' + document.location.host + "/admin/wx/manage";
+// const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
+const baseUrl= '//' + document.location.host + "/admin/wx/manage";
 
 const http = axios.create({
   timeout: 1000 * 30,
