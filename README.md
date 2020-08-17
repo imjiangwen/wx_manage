@@ -12,3 +12,5 @@ npm run serve
 npm run build
 #### 图片预览
 https://gitee.com/mosmos_admin/wx_manage
+#### 博客地址
+https://i847.cn/article/63834.html
