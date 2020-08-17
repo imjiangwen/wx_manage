@@ -8,15 +8,13 @@
 // import Router from 'vue-router'
 import http from '@/utils/httpRequest'
 import { isURL } from '@/utils/validate'
-import { clearLoginInfo } from '@/utils'
 
 // Vue.use(Router)
 
 const _import = require('./import-views')
 // 全局路由(无需嵌套上左右整体布局)
 const globalRoutes = [
-  { path: '/404', component: () => import('@/views/common/404'), name: '404', meta: { title: '404未找到' } },
-  { path: '/login', component: () => import('@/views/common/login'), name: 'login', meta: { title: '登录' } }
+  { path: '/404', component: () => import('@/views/common/404'), name: '404', meta: { title: '404未找到' } }
 ]
 
 // 主入口路由(需嵌套上左右整体布局)
@@ -35,11 +33,6 @@ const mainRoutes = {
     { path: '/theme', component: () => import('@/views/common/theme'), name: 'theme', meta: { title: '主题' } },
   ],
   beforeEnter(to, from, next) {
-    let token = Vue.cookie.get('token')
-    if (!token || !/\S/.test(token)) {
-      clearLoginInfo()
-      next({ name: 'login' })
-    }
     next()
   }
 }
@@ -70,6 +63,24 @@ router.beforeEach((to, from, next) => {
     next({ ...to, replace: true })
   };
 
+})
+
+// 全局进行错误拦截：
+const routerMethods = ['push', 'replace']
+routerMethods.forEach(method => {
+  const originalCall = VueRouter.prototype[method]
+  VueRouter.prototype[method] = function(location, onResolve, onReject) {
+    if (onResolve || onReject) {
+      return originalCall.call(this, location, onResolve, onReject)
+    }
+    return originalCall.call(this, location).catch(err => {
+      if(err.name=='NavigationDuplicated'){
+        
+      }else{
+        console.log(err);
+      }
+    })
+  }
 })
 
 /**

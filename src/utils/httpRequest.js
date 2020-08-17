@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
-import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
-// const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
-const baseUrl= '//' + document.location.host + "/admin/wx/manage";
+const baseUrl = 'http://dev.admin.com:61000/admin/wx/manage'
+// const baseUrl= '//' + document.location.host + "/admin/wx/manage";
 
 const http = axios.create({
   timeout: 1000 * 30,
@@ -24,18 +23,6 @@ http.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
-/**
- * 响应拦截
- */
-http.interceptors.response.use(response => {
-  if (response.data && response.data.code === 401) { // 401, token失效
-    // clearLoginInfo()
-    // router.push({ name: 'login' })
-  }
-  return response
-}, error => {
-  return Promise.reject(error)
-})
 
 /**
  * 请求地址处理

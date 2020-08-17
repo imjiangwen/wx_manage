@@ -47,11 +47,3 @@ export function treeDataTranslate(data, id = 'id', pid = 'parentId') {
   }
   return res
 }
-
-/**
- * 清除登录信息
- */
-export function clearLoginInfo() {
-  Vue.cookie.delete('token');
-  router.options.isAddDynamicMenuRoutes = false
-}

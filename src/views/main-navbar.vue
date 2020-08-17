@@ -25,7 +25,6 @@
 
 <script>
 import WxAccountSelector from '@/components/wx-account-selector'
-import { clearLoginInfo } from '@/utils'
 export default {
     components: {
         WxAccountSelector
